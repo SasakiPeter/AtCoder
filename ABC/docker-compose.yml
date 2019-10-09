@@ -1,0 +1,8 @@
+version: "3"
+services:
+  atcoder:
+    build: .
+    volumes:
+      - $PWD:/tmp/working
+    working_dir: /tmp/working
+    tty: True
