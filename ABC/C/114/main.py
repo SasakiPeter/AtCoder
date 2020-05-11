@@ -1,28 +1,50 @@
-N = int(input())
-# for縛り
-# if n < 3:
-#     print(0)
-# elif n > 3:
-#     #
-#     print(6*2)
+n = int(input())
+like_753 = []
 
 
-# 全部を洗い出すのは無理なので、準753数を数え上げる
-# どのように列挙するか、考えてみる
-
-
-# 再帰関数を使って数え上げ
 def dfs(x):
-    if int('0'+x) > N:
+    if n < x:
         return 0
+    else:
+        like_753.append(x)
+        dfs(10*x+3)
+        dfs(10*x+5)
+        dfs(10*x+7)
 
-    retval = 1 if len(set(x)) == 3 else 0
-    for c in '753':
-        retval += dfs(x + c)
-    return retval
+
+dfs(3)
+dfs(5)
+dfs(7)
+
+ls_753 = [x for x in like_753 if len(set(str(x))) == 3]
+print(len(ls_753))
 
 
-print(dfs(''))
+# N = int(input())
+# # for縛り
+# # if n < 3:
+# #     print(0)
+# # elif n > 3:
+# #     #
+# #     print(6*2)
+
+
+# # 全部を洗い出すのは無理なので、準753数を数え上げる
+# # どのように列挙するか、考えてみる
+
+
+# # 再帰関数を使って数え上げ
+# def dfs(x):
+#     if int('0'+x) > N:
+#         return 0
+
+#     retval = 1 if len(set(x)) == 3 else 0
+#     for c in '753':
+#         retval += dfs(x + c)
+#     return retval
+
+
+# print(dfs(''))
 
 # 4進数を使って、数え上げ
 

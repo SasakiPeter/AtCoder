@@ -1,31 +1,67 @@
-# DFS stackで実装する DFSより早い　pypyも使えるし
 import sys
 input = sys.stdin.readline
+# sys.setrecursionlimit(10**7)
 n, q = map(int, input().split())
-edges = [[] for _ in range(n)]
+edges = [[]for _ in range(n)]
 for _ in range(n-1):
     a, b = list(map(lambda x: int(x)-1, input().split()))
     edges[a].append(b)
     edges[b].append(a)
 
-values = [0]*n
+counts = [0]*n
 for _ in range(q):
     p, x = map(int, input().split())
-    values[p-1] += x
+    counts[p-1] += x
 
-stack = [0]
-visited = [0]*n
-while stack:
-    v = stack.pop()
-    if visited[v]:
-        continue
-    visited[v] = 1
+
+euler_tour = []
+
+# v, parentだけでよかった
+
+
+def dfs(v, parent):
+    euler_tour.append(v)
     for v2 in edges[v]:
-        if visited[v2]:
+        if v2 == parent:
             continue
-        values[v2] += values[v]
-        stack.append(v2)
-print(*values)
+        counts[v2] += counts[v]
+        dfs(v2, v)
+        euler_tour.append(v)
+
+
+dfs(0, -1)
+print(*counts)
+# print(euler_tour)
+
+
+# # DFS stackで実装する DFSより早い　pypyも使えるし
+# import sys
+# input = sys.stdin.readline
+# n, q = map(int, input().split())
+# edges = [[] for _ in range(n)]
+# for _ in range(n-1):
+#     a, b = list(map(lambda x: int(x)-1, input().split()))
+#     edges[a].append(b)
+#     edges[b].append(a)
+
+# values = [0]*n
+# for _ in range(q):
+#     p, x = map(int, input().split())
+#     values[p-1] += x
+
+# stack = [0]
+# visited = [0]*n
+# while stack:
+#     v = stack.pop()
+#     if visited[v]:
+#         continue
+#     visited[v] = 1
+#     for v2 in edges[v]:
+#         if visited[v2]:
+#             continue
+#         values[v2] += values[v]
+#         stack.append(v2)
+# print(*values)
 
 
 # # 2020/4/14 前と全く同じコードでビビった
